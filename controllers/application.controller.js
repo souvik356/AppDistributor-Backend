@@ -3,7 +3,7 @@ import UserModel from "../models/User.js"
 
 export const registerApplication = async (req,res) => {
     try {
-        const { appName,appIcon, releaseType,osType,platformType,release} = req.body
+        const { appName,description,appIcon, releaseType,osType,platformType,release} = req.body
     const loggedInUser = req.user
 
     if(!appName || !releaseType || !osType || !platformType ){
@@ -40,7 +40,8 @@ export const registerApplication = async (req,res) => {
         releaseType,
         osType,
         platformType,
-        user : loggedInUser._id
+        user : loggedInUser._id,
+        description
     })
 
     const saveAppData = await appData.save()
@@ -69,7 +70,7 @@ export const getApplication = async (req,res) => {
     try {
         const loggedInUser = req.user
         // console.log(loggedInUser)
-        const application = await ApplicationModel.find({user : loggedInUser._id}).populate("user","name email")
+        const application = await ApplicationModel.find({user : loggedInUser._id}).populate("user","name email name email mobileNumber role")
 
         return res.json({
             message : "All application are here :-",
@@ -133,9 +134,29 @@ export const deleteApplication = async (req,res) => {
     }
 }
 
+export const getAllApplication = async(req,res) =>{
+    try {
+        const loggedInUser = req.user
+        const allApplications = await ApplicationModel.find({}).populate("user","name email mobileNumber role")
+
+        return res.json({
+            message : 'All applications are here:-',
+            data : allApplications,
+            success : true,
+            error: false
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message : error.message || error,
+            error: true,
+            success : false
+        })
+    }
+}
 
 
 
 
 
 
+// role:- technical lead, software engineer, associates, agent

@@ -7,8 +7,8 @@ dotenv.config()
 
 export const registerUserController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    const { name, email, password,role,mobileNumber } = req.body;
+    if (!name || !email || !password || !role || !mobileNumber) {
       return res.status(400).json({
         message: "please provide field",
         error: true,
@@ -49,6 +49,8 @@ export const registerUserController = async (req, res) => {
       name,
       email,
       password: hashPassword,
+      role,
+      mobileNumber
     });
 
     const savedData = await user.save();

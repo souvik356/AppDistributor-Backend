@@ -28,6 +28,18 @@ const userSchema = mongoose.Schema({
             }
         } 
     },
+    role :{
+       type : String,
+       required : true,
+       validate(value){
+       if(!['Admin', 'Team Leader', 'Customer', 'Agent'].includes(value)){
+            throw new Error(`${value} is not defined`)
+       }
+       }
+    },
+    mobileNumber:{
+        type : Number    
+    },
     applications:[
         {
             type: Schema.Types.ObjectId,

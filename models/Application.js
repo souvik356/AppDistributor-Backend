@@ -7,6 +7,11 @@ const applicationSchema = mongoose.Schema({
         maxLength: 50,
         required: true
     },
+    description:{
+        type: String,
+        maxLength : 60,
+        required: true
+    },
     appIcon : {
         type: String,
         default:'https://cdn-icons-png.freepik.com/256/1077/1077114.png?semt=ais_hybrid',
