@@ -23,7 +23,7 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'PATCH', 'PUT', 'DELETE', 'POST'],
-    exposedHeaders: ['Authorization'] 
+    // exposedHeaders: ['Content-type','Authorization'] 
 }));
 
 app.use(express.json());

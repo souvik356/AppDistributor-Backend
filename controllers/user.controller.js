@@ -113,7 +113,8 @@ export const loginUserController = async (req, res) => {
         message: `${userInDb.name} is Logged in successfull`,
         error: false,
         data : token,
-        success: true
+        success: true,
+        userDetail : userInDb
     })
 
   } catch (error) {
@@ -145,3 +146,31 @@ export const logOutController = async (req,res) => {
     }
     
 } 
+
+export const getLoggedInUser = async (req,res) => {
+  try {
+    const loggedInUser = req.user
+
+    const userDetail = await UserModel.findById(loggedInUser._id)
+
+    if(!userDetail){
+      return res.status(400).json({
+        message : 'User not found',
+        success : false,
+        error : true
+      })
+    }
+    return res.json({
+      message : userDetail,
+      success : true,
+      error: false
+    })
+    
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      error:true,
+      message: error.message || error,
+    })
+  }
+}
